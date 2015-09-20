@@ -21,6 +21,7 @@
       authHeader: 'Authorization',
       authToken: 'Bearer',
       storageType: 'localStorage',
+      disableTokenStorage: false,
       providers: {
         facebook: {
           name: 'facebook',
@@ -370,7 +371,9 @@
 
           provider.open(config.providers[name], userData || {})
             .then(function(response) {
-              shared.setToken(response, false);
+              if (!config.disableTokenStorage) {
+                shared.setToken(response, false);
+              }
               deferred.resolve(response);
             })
             .catch(function(error) {
